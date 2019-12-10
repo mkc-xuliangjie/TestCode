@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using GeTui.Module.Application;
+using GeTui.Module.Domain;
 using GeTui.Module.Infrastructure.Extensions;
 using GeTui.Module.Infrastructure.Mapper;
 
@@ -7,18 +9,39 @@ namespace GeTui.Module.Application.Dto
 {
     public class GeTuiDto
     {
-        public GeTuiDto(string title, string pushContent, string jsonContent, params string[] clientIds)
+        public GeTuiDto(string title, string pushContent, string transmissionContent, PhoneType phoneType, params string[] clientIds)
         {
             Title = title;
             PushContent = pushContent;
-            JsonContent = jsonContent;
+            TransmissionContent = transmissionContent;
             ClientIds = clientIds.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            PhoneType = phoneType;
         }
 
+        /// <summary>
+        /// 标题
+        /// </summary>
         internal string Title { get; set; }
+
+        /// <summary>
+        /// 推送的内容
+        /// </summary>
         internal string PushContent { get; set; }
-        internal string JsonContent { get; set; }
+
+        /// <summary>
+        /// 透传内容
+        /// </summary>
+        internal string TransmissionContent { get; set; }
+
+        /// <summary>
+        /// 用户手机对应的ClientIds
+        /// </summary>
         internal string[] ClientIds { get; set; }
+
+        /// <summary>
+        /// 手机类型
+        /// </summary>
+        internal PhoneType PhoneType { get; set; }
 
         public void CreateGeTui()
         {
@@ -26,11 +49,9 @@ namespace GeTui.Module.Application.Dto
             var geTui = new GeTuiCommand(new Domain.GeTui())
                 .Title(Title)
                 .PushContent(PushContent)
-                .JsonConetnt(JsonContent)
+                .JsonConetnt(TransmissionContent)
                 .ClientId(ClientIds)
                 .Entity;
-            LogService.Log(GeTuiMap.Save(geTui, out var isSave));
-            if (!isSave) return;
             string result, message;
             try
             {
@@ -47,7 +68,6 @@ namespace GeTui.Module.Application.Dto
                 message = $"{Title}【推送失败】{result}\n";
             else
                 message = $"{Title}【推送成功】{GeTuiMap.Update(geTui)}{result}\n";
-            LogService.Log(message);
         }
     }
 }

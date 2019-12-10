@@ -28,17 +28,24 @@ namespace GeTui.Module.Application
         {
             Entity.ClientId = cids.Aggregate((f, n) => $"{f}-{n}");
             if (cids.Length == 1)
+            {
                 Entity.PushType = PushType.PushMessageToSingle;
+            }
             else if (cids.Length < 20)
+            {
                 Entity.PushType = PushType.SingleBatch;
+            }
             else
+            {
                 Entity.PushType = PushType.PushMessageToList;
+            }
+
             return this;
         }
 
-        public GeTuiCommand JsonConetnt(string jsonConetnt)
+        public GeTuiCommand JsonConetnt(string transmissionContent)
         {
-            Entity.JsonContent = jsonConetnt;
+            Entity.TransmissionContent = transmissionContent;
             return this;
         }
     }

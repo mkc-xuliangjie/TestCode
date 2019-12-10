@@ -34,12 +34,12 @@ namespace GeTui.Module.Domain
         public virtual string PushContent { get; set; }
 
         /// <summary>
-        ///     透传内容
+        ///  透传内容
         /// </summary>
-        public virtual string JsonContent { get; set; }
+        public virtual string TransmissionContent { get; set; }
 
         /// <summary>
-        ///     客户端Id
+        /// 客户端Id
         /// </summary>
         public virtual string ClientId { get; set; }
 
@@ -58,16 +58,32 @@ namespace GeTui.Module.Domain
         /// </summary>
         public virtual DateTime PushTime { get; set; }
 
+        /// <summary>
+        /// 手机类型
+        /// </summary>
+        public virtual PhoneType PhoneType { get; set; }
+
+        /// <summary>
+        /// 推送类型 通知：NotificationTemplate，TransmissionTemplate：透传
+        /// </summary>
+        public virtual TemplateType TemplateType { get; set; }
+
         public virtual string Push()
         {
             BasePush push;
+
             switch (PushType)
             {
-                case PushType.PushMessageToSingle:push = new MessageToSinglePush(this);
+                case PushType.PushMessageToSingle:
+                    push = new MessageToSinglePush(PhoneType, TemplateType, this);
                     break;
-                case PushType.SingleBatch: push = new SingleBatchPush(this);
+
+                case PushType.SingleBatch:
+                    push = new SingleBatchPush(PhoneType, TemplateType, this);
                     break;
-                default: push = new MessageToListPush(this);
+
+                default:
+                    push = new MessageToListPush(PhoneType, TemplateType, this);
                     break;
             }
 

@@ -9,7 +9,7 @@ namespace GeTui.Module.Domain.PushStrategy
     /// </summary>
     internal class MessageToListPush : BasePush
     {
-        public MessageToListPush(GeTui geTui) : base(geTui)
+        public MessageToListPush(PhoneType phoneType, TemplateType templateType, GeTui geTui) : base(phoneType, templateType, geTui)
         {
         }
 
@@ -17,18 +17,21 @@ namespace GeTui.Module.Domain.PushStrategy
         {
             var message = new ListMessage
             {
-                Data = GeTui.ToTemplate(),
+                Data = GeTui.ToTemplate(PhoneType, TemplateType),
                 IsOffline = true,// 用户当前不在线时，是否离线存储,可选
                 OfflineExpireTime = 1000 * 3600 * 12,// 离线有效时间，单位为毫秒，可选
                 PushNetWorkType = 0//判断是否客户端是否wifi环境下推送，1为在WIFI环境下，0为不限制网络环境。
             };
-            var targetList = GeTui.ClientId.Split('-')
+
+            var targetList = GeTui.ClientId.Split(',')
                 .Select(x => new Target
                 {
-                    appId = Keys.AppId,
+                    appId = ConfigSettings.AppId,
                     clientId = x
                 }).ToList();
+
             var contentId = getContentId(message);
+
             return pushMessageToList(contentId, targetList);
         }
     }

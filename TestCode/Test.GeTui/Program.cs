@@ -1,6 +1,8 @@
 ﻿using com.igetui.api.openservice;
 using com.igetui.api.openservice.igetui;
 using com.igetui.api.openservice.igetui.template;
+using com.igetui.api.openservice.payload;
+using GetuiServerApiSDK_Core.payload;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,19 +13,19 @@ namespace Test.GeTui
     {
         //参数设置 <-----参数需要重新设置----->
         //http的域名
-        private static String HOST = "http://sdk.open.api.igexin.com/apiex.htm";
+        private static string HOST = "http://sdk.open.api.igexin.com/apiex.htm";
 
         //https的域名
         //private static String HOST = "https://api.getui.com/apiex.htm";
 
         //定义常量, appId、appKey、masterSecret 采用本文档 "第二步 获取访问凭证 "中获得的应用配置
-        private static String APPID = "BAIKH6zbA6AdOXB1BSTCV3";
-        private static String APPKEY = "GZxjI9jjXP8rfNnYW1Foa1";
-        private static String MASTERSECRET = "62VdzpYd5n8HJPzELkwjn1";
+        private static string APPID = "BAIKH6zbA6AdOXB1BSTCV3";
+        private static string APPKEY = "GZxjI9jjXP8rfNnYW1Foa1";
+        private static string MASTERSECRET = "62VdzpYd5n8HJPzELkwjn1";
 
 
         //您获取的clientID
-        private static String CLIENTID = "2126f584bb30f2b88eda617e88010510";
+        private static string CLIENTID = "2126f584bb30f2b88eda617e88010510";
 
         //别名推送方式
         //private static String ALIAS = "";
@@ -33,15 +35,21 @@ namespace Test.GeTui
             //toList接口每个用户状态返回是否开启，可选
             //Console.OutputEncoding = Encoding.GetEncoding(936);
             //Environment.SetEnvironmentVariable("gexin_pushList_needDetails", "true");
-            // pushMessageToApp();
+            pushMessageToApp();
+
+
+            //Console.ReadLine();
 
             //PushMessageToSingle();
 
+            //Console.ReadLine();
+
             //PushMessageToList();
+
+            //Console.ReadLine();
 
             getPushResult();
 
-            Console.WriteLine("Hello World!");
             Console.ReadLine();
         }
 
@@ -197,7 +205,7 @@ namespace Test.GeTui
             //message.PushNetWorkType = 0;        //判断是否客户端是否wifi环境下推送，1为在WIFI环境下，0为不限制网络环境。
             //设置接收者
             List<Target> targetList = new List<Target>();
-           Target target1 = new Target();
+            Target target1 = new Target();
             target1.appId = APPID;
             target1.clientId = CLIENTID;
             //target1.alias = ALIAS1;
@@ -209,14 +217,13 @@ namespace Test.GeTui
             //target2.alias = ALIAS2;
 
             targetList.Add(target1);
-           // targetList.Add(target2);
+            // targetList.Add(target2);
 
             String contentId = push.getContentId(message);
             String pushResult = push.pushMessageToList(contentId, targetList);
             System.Console.WriteLine("-----------------------------------------------");
             System.Console.WriteLine("服务端返回结果:" + pushResult);
         }
-
 
 
         public static void singleBatchDemo()
@@ -270,7 +277,8 @@ namespace Test.GeTui
 
             //taskId
 
-            String ret = push.getPushResult("OSS-1210_466df321b736b36e287f21b0e5d719ee");
+            String ret = push.getPushResult("OSS-1210_f3d11aed8eaa084631f7bbe96f90ea3");
+
             System.Console.WriteLine(ret);
 
         }
@@ -289,7 +297,7 @@ namespace Test.GeTui
         }
 
 
-        //透传模板动作内容
+        //消息透传模板动作内容
         public static TransmissionTemplate TransmissionTemplateDemo()
         {
             TransmissionTemplate template = new TransmissionTemplate();
@@ -297,8 +305,12 @@ namespace Test.GeTui
             template.AppKey = APPKEY;
             //应用启动类型，1：强制应用启动 2：等待应用启动
             template.TransmissionType = 1;
+
+            //template.
+
             //透传内容  
             template.TransmissionContent = "测试1111";
+
             //设置通知定时展示时间，结束时间与开始时间相差需大于6分钟，消息推送后，客户端将在指定时间差内展示消息（误差6分钟）
             //String begin = "2015-03-06 14:36:10";
             //String end = "2015-03-06 14:46:20";
@@ -307,6 +319,68 @@ namespace Test.GeTui
 
             string end = DateTime.Now.AddMinutes(2).ToString("yyyy-MM-dd HH:mm:ss");
             template.setDuration(begin, end);
+
+
+            return template;
+        }
+
+        //透传IOS
+        public static TransmissionTemplate TransmissionTemplateIOSDemo()
+        {
+            TransmissionTemplate template = new TransmissionTemplate();
+            template.AppId = APPID;
+            template.AppKey = APPKEY;
+            template.TransmissionType = 1;            //应用启动类型，1：强制应用启动 2：等待应用启动
+            template.TransmissionContent = "";  //透传内容
+
+            //iOS简单推送
+            //APNPayload apnpayload = new APNPayload();
+            //SimpleAlertMsg alertMsg = new SimpleAlertMsg("alertMsg");
+            //apnpayload.AlertMsg = alertMsg;
+            //apnpayload.Badge = 11;
+            //apnpayload.ContentAvailable = 1;
+            //apnpayload.Category = "";
+            //apnpayload.Sound = "";
+            //apnpayload.addCustomMsg("", "");
+            //template.setAPNInfo(apnpayload);
+
+            //APN高级推送
+            APNPayload apnpayload = new APNPayload();
+            DictionaryAlertMsg alertMsg = new DictionaryAlertMsg();
+            alertMsg.Body = "Body";
+            alertMsg.ActionLocKey = "ActionLocKey";
+            alertMsg.LocKey = "LocKey";
+            alertMsg.addLocArg("LocArg");
+            alertMsg.LaunchImage = "LaunchImage";
+            //iOS8.2支持字段
+            alertMsg.Title = "Title";
+            //alertMsg.TitleLocKey = "TitleLocKey";
+            //alertMsg.addTitleLocArg("TitleLocArg");
+
+            apnpayload.AlertMsg = alertMsg;
+            apnpayload.Badge = 1;
+            apnpayload.ContentAvailable = 1;
+            //apnpayload.Category = "";
+            //apnpayload.Sound = "test1.wav";
+            //apnpayload.addCustomMsg("payload", "payload");
+            //多媒体
+            //MultiMedia multiMedia = new MultiMedia();
+            //multiMedia.rid = "xxx-1";
+            //multiMedia.url = "";
+            //multiMedia.setIsOnlyWifi(false);
+            //multiMedia.type = MultiMedia.MediaType.pic;
+
+            //List<MultiMedia> list = new List<MultiMedia>();
+            //list.Add(multiMedia);
+            //apnpayload.MultiMedias = list;
+            //template.setAPNInfo(apnpayload);
+
+            template.setAPNInfo((Payload)apnpayload);
+
+            //设置客户端展示时间
+            //String begin = "2015-03-06 14:28:10";
+            //String end = "2015-03-06 14:38:20";
+            //template.setDuration(begin, end);
 
             return template;
         }

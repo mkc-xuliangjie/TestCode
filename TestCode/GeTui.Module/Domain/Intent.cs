@@ -11,7 +11,9 @@
 
         public static string GetIntent(this GeTui geTui)
         {
-            return $"{str1}{Keys.PackageName}{str2}{str3}{geTui.Title}{str4}{geTui.PushContent}{str5}{geTui.JsonContent}{str6}";
+            //return $"{str1}{Keys.PackageName}{str2}{str3}{geTui.Title}{str4}{geTui.PushContent}{str5}{geTui.JsonContent}{str6}";
+
+            return string.Empty;
         }
     }
 }
