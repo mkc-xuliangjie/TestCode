@@ -2,6 +2,9 @@
 https://github.com/search?l=C%23&q=getui&type=Repositories
 
 
+Base .NET CORE 2.2
+
+
 pushMessageToApp();
 {"result":"ok","contentId":"OSA-1210_W3hK2WgrW07locoCalJ9R8"}
 

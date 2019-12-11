@@ -62,8 +62,8 @@ namespace Test.GeTui
             GeTuiDto geTuiDto = new GeTuiDto("测试", "测试内容111", "透传内容-1", PhoneType.ANDROID,TemplateType.TransmissionTemplate, cis);
 
 
-            string result = geTuiDto.CreateGeTui();
-            ResultDto resultDto = JsonConvert.DeserializeObject<ResultDto>(result);
+            bool result = geTuiDto.CreateGeTui();
+
             Console.WriteLine(result);
 
 

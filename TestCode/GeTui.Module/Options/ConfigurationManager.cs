@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace BlueCat.Core.Options
+namespace GeTui.Module
 {
-    public class ConfigurationManager
+    internal class ConfigurationManager
     {
         #region 实例
 

@@ -46,9 +46,9 @@ namespace GeTui.Module.Application.Dto
 
         public TemplateType TemplateType { get; set; }
 
-        public string CreateGeTui()
+        public bool CreateGeTui()
         {
-            if (!ClientIds.Any()) return string.Empty;
+            if (!ClientIds.Any()) return false;
             var geTui = new GeTuiCommand(new Domain.GeTui())
                 .Title(Title)
                 .PushContent(PushContent)
@@ -68,13 +68,16 @@ namespace GeTui.Module.Application.Dto
             }
 
             if (result.Contains("异常个推信息")) //异常情况一般为参数错误，重试也只会再次抛出异常
-                message = $"{Title}【推送失败】{GeTuiMap.Update(geTui)}{result}\n";
-            else if (string.IsNullOrEmpty(result) || result.ToObject<ResultDto>().result.ToUpper() != "OK")
-                message = $"{Title}【推送失败】{result}\n";
-            else
-                message = $"{Title}【推送成功】{GeTuiMap.Update(geTui)}{result}\n";
+            {
+                return false;
+            }
+            //    message = $"{Title}【推送失败】{GeTuiMap.Update(geTui)}{result}\n";
+            //else if (string.IsNullOrEmpty(result) || result.ToObject<ResultDto>().result.ToUpper() != "OK")
+            //    message = $"{Title}【推送失败】{result}\n";
+            //else
+            //    message = $"{Title}【推送成功】{GeTuiMap.Update(geTui)}{result}\n";
 
-            return result;
+            return true;
         }
     }
 }

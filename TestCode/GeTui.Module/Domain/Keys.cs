@@ -1,4 +1,4 @@
-﻿using BlueCat.Core.Options;
+﻿
 using System.Configuration;
 
 namespace GeTui.Module.Domain
