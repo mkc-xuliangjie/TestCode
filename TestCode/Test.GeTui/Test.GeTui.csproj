@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GeTui.Module\GeTui.Module.csproj" />
     <ProjectReference Include="..\GeTui.SDK\GeTui.SDK.csproj" />
   </ItemGroup>
 

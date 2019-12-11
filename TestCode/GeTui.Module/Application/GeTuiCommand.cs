@@ -43,9 +43,21 @@ namespace GeTui.Module.Application
             return this;
         }
 
-        public GeTuiCommand JsonConetnt(string transmissionContent)
+        public GeTuiCommand TransmissionContent(string transmissionContent)
         {
             Entity.TransmissionContent = transmissionContent;
+            return this;
+        }
+
+        public GeTuiCommand TemplateType(TemplateType templateType)
+        {
+            Entity.TemplateType = templateType;
+            return this;
+        }
+
+        public GeTuiCommand PhoneType(PhoneType phoneType)
+        {
+            Entity.PhoneType = phoneType;
             return this;
         }
     }

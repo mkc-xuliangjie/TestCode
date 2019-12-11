@@ -9,13 +9,14 @@ namespace GeTui.Module.Application.Dto
 {
     public class GeTuiDto
     {
-        public GeTuiDto(string title, string pushContent, string transmissionContent, PhoneType phoneType, params string[] clientIds)
+        public GeTuiDto(string title, string pushContent, string transmissionContent, PhoneType phoneType, TemplateType templateType, params string[] clientIds)
         {
             Title = title;
             PushContent = pushContent;
             TransmissionContent = transmissionContent;
             ClientIds = clientIds.Where(x => !string.IsNullOrEmpty(x)).ToArray();
             PhoneType = phoneType;
+            TemplateType = templateType;
         }
 
         /// <summary>
@@ -41,16 +42,20 @@ namespace GeTui.Module.Application.Dto
         /// <summary>
         /// 手机类型
         /// </summary>
-        internal PhoneType PhoneType { get; set; }
+        public PhoneType PhoneType { get; set; }
 
-        public void CreateGeTui()
+        public TemplateType TemplateType { get; set; }
+
+        public string CreateGeTui()
         {
-            if (!ClientIds.Any()) return;
+            if (!ClientIds.Any()) return string.Empty;
             var geTui = new GeTuiCommand(new Domain.GeTui())
                 .Title(Title)
                 .PushContent(PushContent)
-                .JsonConetnt(TransmissionContent)
+                .TransmissionContent(TransmissionContent)
                 .ClientId(ClientIds)
+                .TemplateType(TemplateType)
+                .PhoneType(PhoneType)
                 .Entity;
             string result, message;
             try
@@ -68,6 +73,8 @@ namespace GeTui.Module.Application.Dto
                 message = $"{Title}【推送失败】{result}\n";
             else
                 message = $"{Title}【推送成功】{GeTuiMap.Update(geTui)}{result}\n";
+
+            return result;
         }
     }
 }

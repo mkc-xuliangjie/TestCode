@@ -4,6 +4,9 @@ using System.Text;
 
 namespace GeTui.Module.Domain
 {
+    /// <summary>
+    /// 推送使用模板
+    /// </summary>
     public enum TemplateType
     {
         /// <summary>

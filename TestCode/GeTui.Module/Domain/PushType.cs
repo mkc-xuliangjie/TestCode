@@ -1,5 +1,8 @@
 ﻿namespace GeTui.Module.Domain
 {
+    /// <summary>
+    /// 推送方式
+    /// </summary>
     internal enum PushType
     {
         /// <summary>

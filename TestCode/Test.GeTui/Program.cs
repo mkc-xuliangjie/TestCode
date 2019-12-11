@@ -2,6 +2,8 @@
 using com.igetui.api.openservice.igetui;
 using com.igetui.api.openservice.igetui.template;
 using com.igetui.api.openservice.payload;
+using GeTui.Module.Application.Dto;
+using GeTui.Module.Domain;
 using GetuiServerApiSDK_Core.payload;
 using System;
 using System.Collections.Generic;
@@ -35,7 +37,7 @@ namespace Test.GeTui
             //toList接口每个用户状态返回是否开启，可选
             //Console.OutputEncoding = Encoding.GetEncoding(936);
             //Environment.SetEnvironmentVariable("gexin_pushList_needDetails", "true");
-            pushMessageToApp();
+            //pushMessageToApp();
 
 
             //Console.ReadLine();
@@ -48,7 +50,14 @@ namespace Test.GeTui
 
             //Console.ReadLine();
 
-            getPushResult();
+            //getPushResult();
+            string[] cis = new string[1] {
+                CLIENTID
+            };
+
+            GeTuiDto geTuiDto = new GeTuiDto("测试", "测试内容111", "这是测试内容哦11", PhoneType.ANDROID,TemplateType.NotificationTemplate, cis);
+           string result= geTuiDto.CreateGeTui();
+            Console.WriteLine(result);
 
             Console.ReadLine();
         }
