@@ -5,6 +5,7 @@ using com.igetui.api.openservice.payload;
 using GeTui.Module.Application.Dto;
 using GeTui.Module.Domain;
 using GetuiServerApiSDK_Core.payload;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -59,8 +60,13 @@ namespace Test.GeTui
             };
 
             GeTuiDto geTuiDto = new GeTuiDto("测试", "测试内容111", "透传内容-1", PhoneType.ANDROID,TemplateType.TransmissionTemplate, cis);
-           string result= geTuiDto.CreateGeTui();
+
+
+            string result = geTuiDto.CreateGeTui();
+            ResultDto resultDto = JsonConvert.DeserializeObject<ResultDto>(result);
             Console.WriteLine(result);
+
+
 
             Console.ReadLine();
         }

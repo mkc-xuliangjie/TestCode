@@ -1,6 +1,6 @@
 ﻿namespace GeTui.Module.Application.Dto
 {
-    internal class ResultDto
+    public class ResultDto
     {
         /// <summary>
         /// 正确为ok
