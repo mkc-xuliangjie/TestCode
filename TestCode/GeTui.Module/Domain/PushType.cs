@@ -22,4 +22,14 @@
         /// </summary>
         SingleBatch
     }
+
+
+    public class TransmissionContentModel
+    {
+        public string payload { get; set; }
+
+        public string tilte { get; set; }
+        
+        public string content { get; set; }
+    }
 }

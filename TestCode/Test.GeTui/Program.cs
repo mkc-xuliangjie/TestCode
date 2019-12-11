@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// The GeTui namespace.
+/// </summary>
 namespace Test.GeTui
 {
     class Program
@@ -55,7 +58,7 @@ namespace Test.GeTui
                 CLIENTID
             };
 
-            GeTuiDto geTuiDto = new GeTuiDto("测试", "测试内容111", "这是测试内容哦11", PhoneType.ANDROID,TemplateType.NotificationTemplate, cis);
+            GeTuiDto geTuiDto = new GeTuiDto("测试", "测试内容111", "透传内容-1", PhoneType.ANDROID,TemplateType.TransmissionTemplate, cis);
            string result= geTuiDto.CreateGeTui();
             Console.WriteLine(result);
 

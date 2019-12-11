@@ -10,4 +10,13 @@
     <ProjectReference Include="..\Google.ProtocolBuffers\Google.ProtocolBuffers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GetuiServerApiSDK">
+      <HintPath>GetuiServerApiSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.ProtocolBuffers">
+      <HintPath>Google.ProtocolBuffers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

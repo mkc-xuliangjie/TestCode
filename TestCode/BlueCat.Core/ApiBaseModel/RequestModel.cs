@@ -5,6 +5,15 @@ using System.Text;
 
 namespace BlueCat.Core
 {
+    /// <summary>
+    /// Class RequestModel.
+    /// </summary>
+    /// <remarks>
+    /// <para>作者    :xulj</para>	
+    /// <para>创建时间:2019-12-09</para>
+    /// <para>最后更新:xulj</para>	
+    /// <para>更新时间:2019-12-09</para>
+    /// </remarks>
     public class RequestModel
     {
         /// <summary>
