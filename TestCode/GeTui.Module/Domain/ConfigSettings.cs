@@ -10,5 +10,6 @@ namespace GeTui.Module.Domain
         public static readonly string AppId = ConfigurationManager.AppSettings["AppId"];
         public static readonly string MasterSecret = ConfigurationManager.AppSettings["MasterSecret"];
         public static readonly string DefaultPushContent = ConfigurationManager.AppSettings["DefaultPushContent"];
+        public static readonly string DefaultTitle = ConfigurationManager.AppSettings["DefaultTitle"];
     }
 }

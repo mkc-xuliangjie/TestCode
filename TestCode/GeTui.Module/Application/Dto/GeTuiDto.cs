@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using GeTui.Module.Application;
-using GeTui.Module.Domain;
+﻿using GeTui.Module.Domain;
 using GeTui.Module.Infrastructure.Extensions;
-using GeTui.Module.Infrastructure.Mapper;
+using System;
+using System.Linq;
 
 namespace GeTui.Module.Application.Dto
 {
@@ -11,8 +9,8 @@ namespace GeTui.Module.Application.Dto
     {
         public GeTuiDto(string title, string pushContent, string transmissionContent, PhoneType phoneType, TemplateType templateType, params string[] clientIds)
         {
-            Title = title ?? string.Empty;
-            PushContent = pushContent ?? string.Empty;
+            Title = title ?? ConfigSettings.DefaultTitle;
+            PushContent = pushContent ?? ConfigSettings.DefaultPushContent;
             TransmissionContent = transmissionContent ?? string.Empty;
             ClientIds = clientIds == null ? null : clientIds.Where(x => !string.IsNullOrEmpty(x)).ToArray();
             PhoneType = phoneType;
