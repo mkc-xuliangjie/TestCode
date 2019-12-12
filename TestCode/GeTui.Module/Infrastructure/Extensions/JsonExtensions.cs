@@ -15,18 +15,24 @@ namespace GeTui.Module.Infrastructure.Extensions
         }
 
         /// <summary>
-        /// 将对象转换为Json字符串
+        /// 将字符串反序列化为指定类型的对象
         /// </summary>
-        /// <param name="target">目标对象</param>
-        /// <param name="isConvertToSingleQuotes">是否将双引号转成单引号</param>
-        public static string ToJson(object target, bool isConvertToSingleQuotes = false)
+        /// <param name="str">String.</param>
+        /// <param name="settings">Json Settings.</param>
+        /// <typeparam name="T">要反序列化的的对象类型</typeparam>
+        public static T AsObject<T>(this string str, JsonSerializerSettings settings = null)
         {
-            if (target == null)
-                return "{}";
-            var result = JsonConvert.SerializeObject(target);
-            if (isConvertToSingleQuotes)
-                result = result.Replace("\"", "'");
-            return result;
+            if (string.IsNullOrWhiteSpace(str))
+                return default(T);
+
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(str, settings ?? new JsonSerializerSettings());
+            }
+            catch
+            {
+                return default(T);
+            }
         }
     }
 }

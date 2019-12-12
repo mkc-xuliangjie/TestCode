@@ -11,10 +11,10 @@ namespace GeTui.Module.Application.Dto
     {
         public GeTuiDto(string title, string pushContent, string transmissionContent, PhoneType phoneType, TemplateType templateType, params string[] clientIds)
         {
-            Title = title;
-            PushContent = pushContent;
-            TransmissionContent = transmissionContent;
-            ClientIds = clientIds.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            Title = title ?? string.Empty;
+            PushContent = pushContent ?? string.Empty;
+            TransmissionContent = transmissionContent ?? string.Empty;
+            ClientIds = clientIds == null ? null : clientIds.Where(x => !string.IsNullOrEmpty(x)).ToArray();
             PhoneType = phoneType;
             TemplateType = templateType;
         }
@@ -46,38 +46,34 @@ namespace GeTui.Module.Application.Dto
 
         public TemplateType TemplateType { get; set; }
 
-        public bool CreateGeTui()
+        public ResultDto CreateGeTui()
         {
-            if (!ClientIds.Any()) return false;
-            var geTui = new GeTuiCommand(new Domain.GeTui())
-                .Title(Title)
-                .PushContent(PushContent)
-                .TransmissionContent(TransmissionContent)
-                .ClientId(ClientIds)
-                .TemplateType(TemplateType)
-                .PhoneType(PhoneType)
-                .Entity;
-            string result, message;
+            ResultDto resultDto = new ResultDto();
+
             try
             {
-                result = geTui.Push();
+                if (ClientIds == null || !ClientIds.Any()) return ResultDto.CreateFailedResultDto("ClientIds 不能为空.");
+                var geTui = new GeTuiCommand(new Domain.GeTui())
+                    .Title(Title)
+                    .PushContent(PushContent)
+                    .TransmissionContent(TransmissionContent)
+                    .ClientId(ClientIds)
+                    .TemplateType(TemplateType)
+                    .PhoneType(PhoneType)
+                    .Entity;
+
+                string result = geTui.Push();
+
+                resultDto = result.AsObject<ResultDto>();
             }
             catch (Exception e)
             {
-                result = $"【异常个推信息】{e.Message}{e.StackTrace}";
+                string desc = $"【异常个推信息】{e.Message}{e.StackTrace}";
+
+                resultDto = ResultDto.CreateFailedResultDto(desc);
             }
 
-            if (result.Contains("异常个推信息")) //异常情况一般为参数错误，重试也只会再次抛出异常
-            {
-                return false;
-            }
-            //    message = $"{Title}【推送失败】{GeTuiMap.Update(geTui)}{result}\n";
-            //else if (string.IsNullOrEmpty(result) || result.ToObject<ResultDto>().result.ToUpper() != "OK")
-            //    message = $"{Title}【推送失败】{result}\n";
-            //else
-            //    message = $"{Title}【推送成功】{GeTuiMap.Update(geTui)}{result}\n";
-
-            return true;
+            return resultDto;
         }
     }
 }

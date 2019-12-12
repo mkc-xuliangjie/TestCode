@@ -20,5 +20,19 @@
         /// successed_online,用户在线，消息在线下发,successed_offline,用户离线,消息存入离线系统
         /// </summary>
         public string status { get; set; }
+
+        /// <summary>
+        /// 描述信息
+        /// </summary>
+        public string desc { get; set; }
+
+        public static ResultDto CreateFailedResultDto(string desc)
+        {
+            return new ResultDto()
+            {
+                result="error",
+                desc=desc
+            };
+        }
     }
 }

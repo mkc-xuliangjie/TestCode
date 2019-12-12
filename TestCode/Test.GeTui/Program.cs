@@ -59,14 +59,10 @@ namespace Test.GeTui
                 CLIENTID
             };
 
-            GeTuiDto geTuiDto = new GeTuiDto("测试", "测试内容111", "透传内容-1", PhoneType.ANDROID,TemplateType.TransmissionTemplate, cis);
+            GeTuiDto geTuiDto = new GeTuiDto("", "", "1111", PhoneType.ANDROID,TemplateType.TransmissionTemplate, cis);
 
 
-            bool result = geTuiDto.CreateGeTui();
-
-            Console.WriteLine(result);
-
-
+            geTuiDto.CreateGeTui();
 
             Console.ReadLine();
         }

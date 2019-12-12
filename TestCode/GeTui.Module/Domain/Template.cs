@@ -81,9 +81,9 @@ namespace GeTui.Module.Domain
             //    payload = geTui.TransmissionContent
             //};
 
-           // template.TransmissionContent = JsonExtensions.ToJson(transmissionContentModel);
+            // template.TransmissionContent = JsonExtensions.ToJson(transmissionContentModel);
 
-
+            //设置三方通知
             var notify = new Notify
             {
                 Title = title, //通知标题
@@ -93,7 +93,6 @@ namespace GeTui.Module.Domain
             };
 
             template.set3rdNotifyInfo(notify);
-
 
             //iOS简单推送
             //APNPayload apnpayload = new APNPayload();
